@@ -3,12 +3,12 @@ public class Simbolo {
 	
 	private String nombre;
 	private String valor;
-	private int columna;
+	private int fila;
 	private String tipo;
 	
 	public Simbolo(String tipo, String nombre, String valor, int c) {
 		this.nombre=nombre;
-		columna = c;
+		fila = c;
 		this.tipo = tipo;
 		this.valor=valor;
 	}
@@ -29,12 +29,12 @@ public class Simbolo {
 		this.nombre = nombre;
 	}
 
-	public int getColumna() {
-		return columna;
+	public int getFila() {
+		return fila;
 	}
 
-	public void setColumna(int columna) {
-		this.columna = columna;
+	public void setFila(int fila) {
+		this.fila = fila;
 	}
 
 	public String getTipo() {

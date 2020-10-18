@@ -20,9 +20,6 @@ public class TablaSimbolos extends JFrame{
 		String datos[][]=new String[5][3];
 		
 	}
-	public void setTokens(ArrayList<Token> tokens) {
-		this.tokens=tokens;
-	}
 	public void generarTabla() {
 		tabla=new JTable(modelo);
 		Token aux;
@@ -54,5 +51,11 @@ public class TablaSimbolos extends JFrame{
 	}
 	public void mostrar() {
 		this.setVisible(true);		
+	}
+	public ArrayList<Token> getTokens() {
+		return tokens;
+	}
+	public void setTokens(ArrayList<Token> tokens) {
+		this.tokens=tokens;
 	}
 }

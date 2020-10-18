@@ -71,7 +71,7 @@ public class Analiza
 			tipo =50;
 		}
 		if(token.matches("^[0-9][0-9][0-9]+?$")) {//error en numeros
-			resultado.add("Error Léxico, se esperaba una longitud de 2 dígitos en el número \"" + token +"\" en la linea "+renglon+", No. de token "+columna+" ");
+			resultado.add("Error Lexico, se esperaba una longitud de 2 digitos en el numero \"" + token +"\" en la linea "+renglon+", No. de token "+columna+" ");
 			tokenRC.add(new Token(token, renglon, columna, tipo));
 			bandera = false;
 			return;
@@ -83,7 +83,7 @@ public class Analiza
 			if(mat.find())
 				tipo =52;
 			else {
-				resultado.add("Error Léxico en la linea \""+renglon+"\" No. de token \""+columna+"\" nombre del token \""+token+"\", algunos signos no se admiten, los identificadores deben llevar al menos un número al final");
+				resultado.add("Error Lexico en la linea \""+renglon+"\" No. de token \""+columna+"\" nombre del token \""+token+"\", algunos signos no se admiten, los identificadores deben llevar al menos un numero al final");
 				tokenRC.add(new Token(token, renglon, columna, tipo));
 				bandera = false;
 				return;
@@ -103,7 +103,7 @@ public class Analiza
 	}
 	public void analizadorSemantico() {
 		crearTabla();
-		Semantico sem=new Semantico(tabla.getSimbolos());
+		Semantico sem=new Semantico(tabla.getSimbolos(), tokenRC);
 		resultado.add(sem.getErrores());
 		bandera=sem.getBandera();
 		
