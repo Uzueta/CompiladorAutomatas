@@ -78,12 +78,12 @@ public class Analiza
 		}
 	
 		if(tipo==-1) {
-			Pattern pat = Pattern.compile("^[a-z]+[0-9]+$");
+			Pattern pat = Pattern.compile("^[a-zA-Z]+[0-9]*+$");
 			Matcher mat = pat.matcher(token);
 			if(mat.find())
 				tipo =52;
 			else {
-				resultado.add("Error Lexico en la linea \""+renglon+"\" No. de token \""+columna+"\" nombre del token \""+token+"\", algunos signos no se admiten, los identificadores deben llevar al menos un numero al final");
+				resultado.add("Error Lexico en la linea \""+renglon+"\" No. de token \""+columna+"\" nombre del token \""+token+"\", algunos signos no se admiten");
 				tokenRC.add(new Token(token, renglon, columna, tipo));
 				bandera = false;
 				return;
