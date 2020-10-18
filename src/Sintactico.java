@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Sintactico<T> {
 	ArrayList<Token> tokenRC;
 
+	boolean bandera;
 	ArrayList<String> token;
 	ArrayList<Integer> tipo;
 	String tok = "", esperado = "";
@@ -19,6 +20,7 @@ public class Sintactico<T> {
 
 //	public Sintactico(ArrayList<String> token, ArrayList<Integer> tipo) 
 	public Sintactico(ArrayList<Token> tokenRC) {
+		bandera=true;
 		this.tokenRC = tokenRC;
 //		this.token = token;
 //		this.tipo = tipo; 
@@ -30,6 +32,7 @@ public class Sintactico<T> {
 //			this.tok = this.token.get(0);
 		} catch (Exception e) {
 			Main.consola.append("El archivo est� vac�o");
+//			bandera=false;
 		}
 		Programa();
 	}
@@ -90,14 +93,9 @@ public class Sintactico<T> {
 			eat(entero);
 
 			tok = this.tok;
-			System.out.println(ID+" --ID");
 			eat(ID);
-			System.out.println(type+" --type");
 			if (type == EQ) {
 				eat(EQ);
-				System.out.println(num+ "--num");
-				System.out.println(falsex + "--falsex");
-				System.out.println(truex + "--truex");
 				if (type == num)
 					eat(num);
 				
@@ -263,12 +261,14 @@ public class Sintactico<T> {
 					+ tipo + " **";
 
 		Main.consola.append(tipo);
+		bandera=false;
 	}
 
 	public void error() {
 		Main.consola.append("Error en la sintaxis, con el siguiente token ** " + tok + " ** en linea ** "
 				+ tokenRC.get(contando).getRenglon() + " **, No. de token ** " + tokenRC.get(contando).getColumna()
 				+ " **");
+		bandera=false;
 	}
 
 	public boolean LogicSimbols() {
