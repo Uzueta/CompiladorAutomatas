@@ -90,13 +90,17 @@ public class Sintactico<T> {
 			eat(entero);
 
 			tok = this.tok;
+			System.out.println(ID+" --ID");
 			eat(ID);
+			System.out.println(type+" --type");
 			if (type == EQ) {
 				eat(EQ);
-
+				System.out.println(num+ "--num");
+				System.out.println(falsex + "--falsex");
+				System.out.println(truex + "--truex");
 				if (type == num)
 					eat(num);
-
+				
 				else if (type == falsex)
 					eat(falsex);
 

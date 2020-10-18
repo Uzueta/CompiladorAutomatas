@@ -10,8 +10,8 @@ public class Analiza
     int renglon = 1,columna = 1, col2 = 0, cont = 0,  contador = -1;
     int retEQ = 0, retMayEQ = 0, retMenEQ = 0, retDif = 0;
     boolean bandera = true;
-    ArrayList<String> resultado = new ArrayList<String>(); 
-	ArrayList<Token> tokenRC = new ArrayList<Token>();
+    private ArrayList<String> resultado = new ArrayList<String>(); 
+	private ArrayList<Token> tokenRC = new ArrayList<Token>();
 	public Analiza(String ruta) 
 	{
 		analizaCodigo(ruta);
@@ -70,7 +70,7 @@ public class Analiza
 			tipo =50;
 		}
 		if(token.matches("^[0-9][0-9][0-9]+?$")) {//error en numeros
-			resultado.add("Error Lï¿½xico, se esperaba una longitud de 2 dï¿½gitos en el nï¿½mero \"" + token +"\" en la linea "+renglon+", No. de token "+columna+" ");
+			resultado.add("Error Léxico, se esperaba una longitud de 2 dígitos en el número \"" + token +"\" en la linea "+renglon+", No. de token "+columna+" ");
 			tokenRC.add(new Token(token, renglon, columna, tipo));
 			bandera = false;
 			return;
@@ -82,7 +82,7 @@ public class Analiza
 			if(mat.find())
 				tipo =52;
 			else {
-				resultado.add("Error Lï¿½xico en la linea \""+renglon+"\" No. de token \""+columna+"\" nombre del token \""+token+"\", algunos signos no se admiten, los identificadores deben llevar al menos un nï¿½mero al final");
+				resultado.add("Error Léxico en la linea \""+renglon+"\" No. de token \""+columna+"\" nombre del token \""+token+"\", algunos signos no se admiten, los identificadores deben llevar al menos un número al final");
 				tokenRC.add(new Token(token, renglon, columna, tipo));
 				bandera = false;
 				return;
@@ -153,5 +153,17 @@ public class Analiza
 		}
 //		System.out.println("Antes de madar token, token vale = " + token);
 		return token;
+	}
+	public ArrayList<String> getResultado() {
+		return resultado;
+	}
+	public void setResultado(ArrayList<String> resultado) {
+		this.resultado = resultado;
+	}
+	public ArrayList<Token> getTokenRC() {
+		return tokenRC;
+	}
+	public void setTokenRC(ArrayList<Token> tokenRC) {
+		this.tokenRC = tokenRC;
 	}
 }

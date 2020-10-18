@@ -27,8 +27,11 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 public class Main extends JFrame implements ActionListener {
 
-	public static JTextArea area, consola;
-	private JButton btnCompilar, btnAbrir, btnCerrar;
+	public static JTextArea area, consola, tab;
+	private JButton btnCompilar, btnAbrir, btnCerrar, btnTablaSimbolos;
+	private TablaSimbolos tabla;
+	private JScrollPane tablaS;
+	private JScrollPane scrollPaneConsola;
 	
 	public Main() {
 		hazInterfaz();
@@ -47,36 +50,51 @@ public class Main extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setShape(new RoundRectangle2D.Double(0, 0, 500, 700, 20, 20));
 
+		//JPanel panel =new JPanel();
 		PanelGradiente panel = new PanelGradiente(	);
 		panel.setBounds(0,0,500,700);
+		JPanel t= new JPanel();
+		t.setBounds(165, 5, 140,40);
 		
 		area = new JTextArea();
 		consola = new JTextArea();
+		tab= new JTextArea();
 		consola.setEnabled(false);
 		consola.setDisabledTextColor(Color.BLACK);
 		btnCompilar= new JButton("Compilar");
-		btnCompilar.setBounds(88, 5, 150, 40);
+		btnCompilar.setBounds(35, 5, 120, 40);
 		btnCompilar.addActionListener(this);
+		btnTablaSimbolos=new JButton("Tabla de símbolos");
+		btnTablaSimbolos.setBounds(165, 5, 140,40);
+		btnTablaSimbolos.addActionListener(this);
+		btnTablaSimbolos.setEnabled(false);
 		btnAbrir= new JButton("Abrir archivo");
-		btnAbrir.setBounds(263, 5, 150, 40);
+		btnAbrir.setBounds(315, 5, 120, 40);
 		btnAbrir.addActionListener(this);
 		btnCerrar= new JButton("X");
 		btnCerrar.setBounds(440,5, 40,40);
 		btnCerrar.setBackground(Color.decode("#65417A"));
 		btnCerrar.addActionListener(this);
 		
+		tablaS=new JScrollPane();
+		tablaS.setBounds(30, 350, 440, 330);
+		tablaS.setLayout(null);
+		tablaS.setVisible(false);
 		JScrollPane scrollPaneArea = new JScrollPane(area);
 		scrollPaneArea.setBounds(30, 50, 440, 300);
-		JScrollPane scrollPaneConsola = new JScrollPane(consola);
+		scrollPaneConsola = new JScrollPane(consola);
 		scrollPaneConsola.setBounds(30, 350, 440, 330);
 		
 		add(scrollPaneArea);
 		add(scrollPaneConsola);
-		add(btnAbrir);
+		//add(t);
 		add(btnCompilar);
+		add(btnTablaSimbolos);
+		add(btnAbrir);
 		add(btnCerrar);
 		add(panel);
 		setVisible(true);
+		
 	}
 	
 	@Override
@@ -89,6 +107,11 @@ public class Main extends JFrame implements ActionListener {
 		if(e.getSource() == btnCompilar) {
 			generarArchivo();
 			compilar();
+			return;
+		}
+		
+		if(e.getSource()==btnTablaSimbolos) {
+			tablaSimbolos();
 			return;
 		}
 		
@@ -125,16 +148,25 @@ public class Main extends JFrame implements ActionListener {
 		}
 	}
 	
-	private void compilar() {		
+	private void compilar() {
 		if(area.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(this, "Primero escribe cï¿½digo...");
+			JOptionPane.showMessageDialog(this, "Primero escribe código...");
 			area.requestFocus();
 			return;
 		}
-		
+		btnTablaSimbolos.setEnabled(true);
 		Analiza analizador = new Analiza("codigo.txt");
-		ArrayList<String> a1 = analizador.resultado;
-		ArrayList<Token> tk = analizador.tokenRC;
+		ArrayList<String> a1 = analizador.getResultado();
+		for (int i = 0; i < analizador.getTokenRC().size(); i++) {
+			System.out.println(analizador.getTokenRC().get(i).getTipo()+" --tipo");
+			System.out.println(analizador.getTokenRC().get(i).getToken()+ " --nombre");
+			System.out.println(analizador.getTokenRC().get(i).getRenglon()+ " --posicion");
+			System.out.println(analizador.getTokenRC().get(i).getColumna()+ " --columna");
+			System.out.println("-------------------------------------------------------------");
+		}
+		ArrayList<Token> tk = analizador.getTokenRC();
+		tabla=new TablaSimbolos();//
+		tabla.setTokens(analizador.getTokenRC());
 		Sintactico s;
 
 		consola.setText("");
@@ -144,11 +176,18 @@ public class Main extends JFrame implements ActionListener {
 		}
 
 		if (a1.get(0).equals("No hay errores lexicos")) {
-			s = new Sintactico(analizador.tokenRC);
+			s = new Sintactico(analizador.getTokenRC());
 		}
 	}
 	
-
+	private void tablaSimbolos() {
+//		getContentPane().remove(scrollPaneConsola);
+		tabla.generarTabla();
+		btnTablaSimbolos.setEnabled(false);
+		revalidate();
+		repaint();
+	}
+	
 	class PanelGradiente extends JPanel {
 		private static final long serialVersionUID = 1L;
 		
