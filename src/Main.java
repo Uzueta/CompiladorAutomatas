@@ -29,7 +29,7 @@ public class Main extends JFrame implements ActionListener {
 
 	public static JTextArea area, consola, tab;
 	private JButton btnCompilar, btnAbrir, btnCerrar, btnTablaSimbolos;
-	private TablaSimbolos tabla;
+	private Analiza analizador;
 	private JScrollPane tablaS;
 	private JScrollPane scrollPaneConsola;
 	
@@ -64,7 +64,7 @@ public class Main extends JFrame implements ActionListener {
 		btnCompilar= new JButton("Compilar");
 		btnCompilar.setBounds(35, 5, 120, 40);
 		btnCompilar.addActionListener(this);
-		btnTablaSimbolos=new JButton("Tabla de símbolos");
+		btnTablaSimbolos=new JButton("Tabla de simbolos");
 		btnTablaSimbolos.setBounds(165, 5, 140,40);
 		btnTablaSimbolos.addActionListener(this);
 		btnTablaSimbolos.setEnabled(false);
@@ -150,24 +150,23 @@ public class Main extends JFrame implements ActionListener {
 	
 	private void compilar() {
 		if(area.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(this, "Primero escribe código...");
+			JOptionPane.showMessageDialog(this, "Primero escribe codigo...");
 			area.requestFocus();
 			return;
 		}
 		btnTablaSimbolos.setEnabled(true);
-		Analiza analizador = new Analiza("codigo.txt");
+		analizador = new Analiza("codigo.txt");
 		ArrayList<String> a1 = analizador.getResultado();
-		for (int i = 0; i < analizador.getTokenRC().size(); i++) {
-			System.out.println(analizador.getTokenRC().get(i).getTipo()+" --tipo");
-			System.out.println(analizador.getTokenRC().get(i).getToken()+ " --nombre");
-			System.out.println(analizador.getTokenRC().get(i).getRenglon()+ " --posicion");
-			System.out.println(analizador.getTokenRC().get(i).getColumna()+ " --columna");
-			System.out.println("-------------------------------------------------------------");
-		}
+//		for (int i = 0; i < analizador.getTokenRC().size(); i++) {
+//			System.out.println(analizador.getTokenRC().get(i).getTipo()+" --tipo");
+//			System.out.println(analizador.getTokenRC().get(i).getToken()+ " --nombre");
+//			System.out.println(analizador.getTokenRC().get(i).getRenglon()+ " --posicion");
+//			System.out.println(analizador.getTokenRC().get(i).getColumna()+ " --columna");
+//			System.out.println("-------------------------------------------------------------");
+//		}
 		ArrayList<Token> tk = analizador.getTokenRC();
-		tabla=new TablaSimbolos();//
-		tabla.setTokens(analizador.getTokenRC());
 		Sintactico s;
+		analizador.crearTabla();
 
 		consola.setText("");
 		
@@ -177,12 +176,14 @@ public class Main extends JFrame implements ActionListener {
 
 		if (a1.get(0).equals("No hay errores lexicos")) {
 			s = new Sintactico(analizador.getTokenRC());
+			if(s.bandera)
+				analizador.analizadorSemantico();
 		}
 	}
 	
 	private void tablaSimbolos() {
 //		getContentPane().remove(scrollPaneConsola);
-		tabla.generarTabla();
+		analizador.mostrarTabla();
 		btnTablaSimbolos.setEnabled(false);
 		revalidate();
 		repaint();

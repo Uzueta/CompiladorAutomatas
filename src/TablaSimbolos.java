@@ -9,6 +9,7 @@ public class TablaSimbolos extends JFrame{
 			"==", "<=", ">=", "!", "!=","true","false", "(",")", "/", "+", "-", "*", "if"};		
 	JTable tabla;
 	DefaultTableModel modelo;
+	private ArrayList<Simbolo> simbolos=new ArrayList<Simbolo>();
 	String [] columnas= {"Tipo", "Nombre", "Valor", "Posición"};
 	private ArrayList<Token> tokens;
 	public TablaSimbolos() {
@@ -25,6 +26,7 @@ public class TablaSimbolos extends JFrame{
 	public void generarTabla() {
 		tabla=new JTable(modelo);
 		Token aux;
+		Simbolo s;
 		String tipo=null, nombre=null, valor=null, pos=null;
 		for (int i = 0; i < tokens.size(); i++) {
 			aux=tokens.get(i);
@@ -39,11 +41,18 @@ public class TablaSimbolos extends JFrame{
 			}
 			else
 				continue;
+			s=new Simbolo(tipo, nombre, valor, Integer.parseInt(pos));
+			simbolos.add(s);
 			Object filas []= {tipo, nombre, valor, pos};
 			modelo.addRow(filas);
 		}
 		JScrollPane panel=new JScrollPane(tabla);
 		add(panel);
-		this.setVisible(true);
+	}
+	public ArrayList<Simbolo> getSimbolos() {
+		return simbolos;
+	}
+	public void mostrar() {
+		this.setVisible(true);		
 	}
 }

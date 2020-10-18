@@ -10,12 +10,14 @@ public class Analiza
     int renglon = 1,columna = 1, col2 = 0, cont = 0,  contador = -1;
     int retEQ = 0, retMayEQ = 0, retMenEQ = 0, retDif = 0;
     boolean bandera = true;
+    private TablaSimbolos tabla;
     private ArrayList<String> resultado = new ArrayList<String>(); 
 	private ArrayList<Token> tokenRC = new ArrayList<Token>();
 	public Analiza(String ruta) 
 	{
 		analizaCodigo(ruta);
-		if(bandera) /*{*/
+//		analizadorSemantico();
+		if(bandera)
 			resultado.add("No hay errores lexicos"); 
 	}
 	public void analizaCodigo(String ruta)
@@ -45,8 +47,7 @@ public class Analiza
 			JOptionPane.showMessageDialog(null,"No se encontro el archivo favor de checar la ruta","Alerta",JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	public void analizadorLexico(String token) 
-	{
+	public void analizadorLexico(String token) {
 		token = Junta(token);
 		if(token.equals("==") || token.equals(">=") || token.equals("<=") || token.equals("!="))
 		{
@@ -70,7 +71,7 @@ public class Analiza
 			tipo =50;
 		}
 		if(token.matches("^[0-9][0-9][0-9]+?$")) {//error en numeros
-			resultado.add("Error Léxico, se esperaba una longitud de 2 dígitos en el número \"" + token +"\" en la linea "+renglon+", No. de token "+columna+" ");
+			resultado.add("Error Lexico, se esperaba una longitud de 2 digitos en el numero \"" + token +"\" en la linea "+renglon+", No. de token "+columna+" ");
 			tokenRC.add(new Token(token, renglon, columna, tipo));
 			bandera = false;
 			return;
@@ -82,7 +83,7 @@ public class Analiza
 			if(mat.find())
 				tipo =52;
 			else {
-				resultado.add("Error Léxico en la linea \""+renglon+"\" No. de token \""+columna+"\" nombre del token \""+token+"\", algunos signos no se admiten, los identificadores deben llevar al menos un número al final");
+				resultado.add("Error Lexico en la linea \""+renglon+"\" No. de token \""+columna+"\" nombre del token \""+token+"\", algunos signos no se admiten, los identificadores deben llevar al menos un numero al final");
 				tokenRC.add(new Token(token, renglon, columna, tipo));
 				bandera = false;
 				return;
@@ -91,6 +92,21 @@ public class Analiza
 		tokenRC.add(new Token(token, renglon, columna, tipo));
 
 //		System.out.println(cont++ + " " +token);
+	}
+	public void crearTabla() {
+		tabla=new TablaSimbolos();//
+		tabla.setTokens(tokenRC);
+		tabla.generarTabla();
+	}
+	public void mostrarTabla() {
+		tabla.mostrar();
+	}
+	public void analizadorSemantico() {
+		crearTabla();
+		Semantico sem=new Semantico(tabla.getSimbolos());
+		resultado.add(sem.getErrores());
+		bandera=sem.getBandera();
+		
 	}
 	public String espacios(String linea){
 		for (String cadena : Arrays.asList("(", ")", "{", "}", "=", ";", "*", "-", "+", "<", "/", ">", "!"))
