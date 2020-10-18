@@ -15,9 +15,13 @@ public class Semantico {
 		this.simbolos=simbolos;
 		this.tokens=tokens;
 		asignaciones();
+<<<<<<< HEAD
 		validarVariablesUsadas();
 		validarDeclaraciones();
 		validarOperandos();
+=======
+		validarDeclaraciones();
+>>>>>>> 5873be354de22d0ee812ee8e997e6cac3b864a5a
 		Main.consola.append(errores);
 	}
 	public void asignaciones() {//Historia de usuario 2
@@ -34,6 +38,7 @@ public class Semantico {
 		}
 	}
 	public void validarVariablesUsadas() {//Historia de usuario 3
+<<<<<<< HEAD
 		ArrayList<String> variables=new ArrayList<String>();
 		for(Simbolo s:simbolos) 
 			variables.add(s.getNombre());
@@ -46,6 +51,11 @@ public class Semantico {
 		}
 	}
 	public void validarDeclaraciones() {//Historia de usuario 4 
+=======
+		
+	}
+	public void validarDeclaraciones() { //Historia de usuario 4 
+>>>>>>> 5873be354de22d0ee812ee8e997e6cac3b864a5a
 		for (int i = 0; i < simbolos.size(); i++) {
 			if(simbolos.get(i).getTipo().equals("int") || simbolos.get(i).getTipo().equals("boolean")) {
 				for (int j = i+1; j < simbolos.size(); j++) {
@@ -55,6 +65,7 @@ public class Semantico {
 				}
 			}
 		}
+<<<<<<< HEAD
 	}
 	public void validarOperandos() {//Historia de usuario 5
 		
@@ -68,6 +79,8 @@ public class Semantico {
 		if(isNumeric(v) || v.equals("true") || v.equals("false"))
 			return false;
 		return true;
+=======
+>>>>>>> 5873be354de22d0ee812ee8e997e6cac3b864a5a
 	}
 	private boolean isNumeric(String str) {
 		  try {  
