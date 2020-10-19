@@ -7,8 +7,8 @@ import javax.swing.JOptionPane;
 
 public class Analiza
 {		
-    int renglon = 1,columna = 1, col2 = 0, cont = 0,  contador = -1;
-    int retEQ = 0, retMayEQ = 0, retMenEQ = 0, retDif = 0;
+    private int renglon = 1,columna = 1, col2 = 0, cont = 0,  contador = -1;
+    private int retEQ = 0, retMayEQ = 0, retMenEQ = 0, retDif = 0;
     boolean bandera = true;
     private TablaSimbolos tabla;
     private ArrayList<String> resultado = new ArrayList<String>(); 
@@ -16,7 +16,6 @@ public class Analiza
 	public Analiza(String ruta) 
 	{
 		analizaCodigo(ruta);
-//		analizadorSemantico();
 		if(bandera)
 			resultado.add("No hay errores lexicos"); 
 	}
@@ -91,7 +90,6 @@ public class Analiza
 		}
 		tokenRC.add(new Token(token, renglon, columna, tipo));
 
-//		System.out.println(cont++ + " " +token);
 	}
 	public void crearTabla() {
 		tabla=new TablaSimbolos();//
@@ -167,7 +165,6 @@ public class Analiza
 			}
 			contador--;
 		}
-//		System.out.println("Antes de madar token, token vale = " + token);
 		return token;
 	}
 	public ArrayList<String> getResultado() {

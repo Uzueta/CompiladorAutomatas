@@ -1,8 +1,6 @@
 
 import java.util.ArrayList;
 
-//import analizadorlexico.copy.Lista3;
-
 public class Sintactico<T> {
 	ArrayList<Token> tokenRC;
 
@@ -18,18 +16,13 @@ public class Sintactico<T> {
 			truex = 17, falsex = 18, brackizq = 19, brackder = 20, div = 21, mas = 22, menos = 23, mult = 24, ifx = 25,
 			num = 50, ID = 52; // bool = 21,
 
-//	public Sintactico(ArrayList<String> token, ArrayList<Integer> tipo) 
 	public Sintactico(ArrayList<Token> tokenRC) {
 		bandera=true;
 		this.tokenRC = tokenRC;
-//		this.token = token;
-//		this.tipo = tipo; 
 		try {
 
 			this.tok = this.tokenRC.get(0).getToken();
 			this.type = this.tokenRC.get(0).getTipo();
-//			this.type = this..get(0);
-//			this.tok = this.token.get(0);
 		} catch (Exception e) {
 			Main.consola.append("El archivo esta vacio");
 //			bandera=false;
@@ -78,11 +71,9 @@ public class Sintactico<T> {
 			Statuto();
 		eat(llaveder);
 
-//		System.out.println((tokenRC.size()) + " contador = " + contando);
 		if (contando < tokenRC.size())
 			error(1);
 		estructura = "estructura correcta";
-//		System.out.println(estructura);
 
 	}
 

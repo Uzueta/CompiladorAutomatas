@@ -50,7 +50,6 @@ public class Main extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setShape(new RoundRectangle2D.Double(0, 0, 500, 700, 20, 20));
 
-		//JPanel panel =new JPanel();
 		PanelGradiente panel = new PanelGradiente(	);
 		panel.setBounds(0,0,500,700);
 		JPanel t= new JPanel();
