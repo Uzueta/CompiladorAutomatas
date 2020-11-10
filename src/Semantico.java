@@ -22,7 +22,7 @@ public class Semantico {
 	}
 	public void asignaciones() {//Historia de usuario 2
 		for(Simbolo s:simbolos) {
-			if(s.getTipo().equals("int") && !isNumeric(s.getValor())) {
+			if(s.getTipo().equals("int") && !isNumeric(s.getValor()) && !s.getValor().equals("null")) {
 				errores+="\nError semantico: la variable "+ s.getNombre()+" de tipo "+s.getTipo()+" no puede tener valor de '"+ s.getValor()+"' este tipo solo acepta valores numericos";
 				bandera=false;
 			}

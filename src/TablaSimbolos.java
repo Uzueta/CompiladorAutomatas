@@ -18,7 +18,7 @@ public class TablaSimbolos extends JFrame{
 		setLocationRelativeTo(null);
 		modelo = new DefaultTableModel(columnas, 0);
 		String datos[][]=new String[5][3];
-		
+
 	}
 	public void generarTabla() {
 		tabla=new JTable(modelo);
@@ -33,7 +33,10 @@ public class TablaSimbolos extends JFrame{
 				if(tokens.get(i+2).getTipo()==8)
 					valor=tokens.get(i+3).getToken();
 				else
-					valor=" ";
+					if(tipo.equalsIgnoreCase("int"))
+						valor="null";
+					else
+						valor=" ";
 				pos=aux.getRenglon()+"";
 			}
 			else
