@@ -14,6 +14,7 @@ public class TablaSimbolos extends JFrame{
 			"==", "<=", ">=", "!", "!=","true","false", "(",")", "/", "+", "-", "*", "if", "double"};		
 	JTable tabla;
 	DefaultTableModel modelo;
+	private int cont=1;
 	private ArrayList <String> opExp;
 	private String expresion;
 	private ArrayList<Simbolo> simbolos=new ArrayList<Simbolo>();
@@ -60,6 +61,7 @@ public class TablaSimbolos extends JFrame{
 		add(panel);
 	}
 	private boolean isExpresion(ArrayList<Token> tokens, int index) {
+		index=index-2;
 		opExp=new ArrayList<String>();
 		if(tokens.get(index+1).getTipo()==9)
 			return false;
@@ -68,10 +70,16 @@ public class TablaSimbolos extends JFrame{
 			if(tokens.get(i).getTipo()==9)
 				break;
 			expresion+=tokens.get(i).getToken();
-			opExp.add(tokens.get(i).getToken());
+			if(isNumeric(tokens.get(i).getToken()) || isOperador(tokens.get(i).getToken()))
+				opExp.add(tokens.get(i).getToken());
 		}
 		
 		return true;
+	}
+	private boolean isOperador(String c) {
+		if(c.equals("+") || c.equals("-") || c.equals("*") || c.equals("/") || c.equals("(") || c.equals(")"))
+			return true;
+		return false;
 	}
 	private double calcular() {
 		ScriptEngineManager mgr = new ScriptEngineManager();
@@ -82,6 +90,8 @@ public class TablaSimbolos extends JFrame{
 		} catch (ScriptException e) {
 			e.printStackTrace();
 		}
+		CodigoIntermedio c=new CodigoIntermedio(cont, opExp, expresion);
+		cont++;
 		return Double.parseDouble(res);
 	}
 	private boolean isNumeric(String str) {
