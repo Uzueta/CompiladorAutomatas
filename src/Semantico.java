@@ -59,13 +59,12 @@ public class Semantico {
 	public void validarOperandos() {//Historia de usuario 5
 		Token aux;
 		for (int i = 0; i < tokens.size(); i++) {
-			if(tokens.get(i).getToken().equals(")") || tokens.get(i).getToken().equals("("))
-				if(isOperadorNumerico(tokens.get(i).getTipo())) {
-					if(!(isVariableEntera(tokens.get(i-1).getToken()) || isNumeric(tokens.get(i-1).getToken())) || !(isVariableEntera(tokens.get(i+1).getToken()) || isNumeric(tokens.get(i+1).getToken()))) {
-						errores+="\nSe encontro una expresion con operadores no aptos al contexto de tipos de datos usados en la posición "+tokens.get(i).getRenglon();
-						continue;
-					}
+			if(isOperadorNumerico(tokens.get(i).getTipo())) {
+				if(!(isVariableEntera(tokens.get(i-1).getToken()) || isNumeric(tokens.get(i-1).getToken())) || !(isVariableEntera(tokens.get(i+1).getToken()) || isNumeric(tokens.get(i+1).getToken()))) {
+					errores+="\nSe encontro una expresion con operadores no aptos al contexto de tipos de datos usados en la posición "+tokens.get(i).getRenglon();
+					continue;
 				}
+			}
 
 			if(tokens.get(i).getToken().equals("!")) {
 				for (int j = 0; j < simbolos.size(); j++) {

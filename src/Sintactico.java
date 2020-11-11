@@ -232,25 +232,25 @@ public class Sintactico<T> {
 	}
 
 	public void error(int type) {
-		String tipo = ValoresInversos(type);
-		if (type == 0)
-			tipo = "\nError sintactico, se esperaba una expresion *class* al comienzo";
-		else if (type == 1)//
-			tipo = "\nError sintactico en los limites, se encontro al menos un token despues de la ultima llave cerrada, token ** "
-					+ tok + " ** en linea ** " + tokenRC.get(contando).getRenglon() + " **, No. de token ** "
-					+ tokenRC.get(contando).getColumna() + " **";
-		else if (type == 2)
-			tipo = "\nError sintactico en asignacion, se esperaba un operador y operando antes de ** " + tok
-					+ " ** en linea ** " + tokenRC.get(contando).getRenglon() + " **, No. de token ** "
-					+ tokenRC.get(contando).getColumna() + " **";
-		else if (type == 3)/**/
-			tipo = "\nError sintactico en validacion, se esperaba un operador logico en lugar de ** " + tok
-					+ " ** en linea ** " + tokenRC.get(contando).getRenglon() + " **, No. de token ** "
-					+ tokenRC.get(contando).getColumna() + " **";
-		else//
-			tipo = "\nError sintactico en token ** " + tok + " ** se esperaba un token ** "
-					+ tipo + " **";
-
+//		String tipo = ValoresInversos(type);
+//		if (type == 0)
+//			tipo = "\nError sintactico, se esperaba una expresion *class* al comienzo";
+//		else if (type == 1)//
+//			tipo = "\nError sintactico en los limites, se encontro al menos un token despues de la ultima llave cerrada, token ** "
+//					+ tok + " ** en linea ** " + tokenRC.get(contando).getRenglon() + " **, No. de token ** "
+//					+ tokenRC.get(contando).getColumna() + " **";
+//		else if (type == 2)
+//			tipo = "\nError sintactico en asignacion, se esperaba un operador y operando antes de ** " + tok
+//					+ " ** en linea ** " + tokenRC.get(contando).getRenglon() + " **, No. de token ** "
+//					+ tokenRC.get(contando).getColumna() + " **";
+//		else if (type == 3)/**/
+//			tipo = "\nError sintactico en validacion, se esperaba un operador logico en lugar de ** " + tok
+//					+ " ** en linea ** " + tokenRC.get(contando).getRenglon() + " **, No. de token ** "
+//					+ tokenRC.get(contando).getColumna() + " **";
+//		else//
+//			tipo = "\nError sintactico en token ** " + tok + " ** se esperaba un token ** "
+//					+ tipo + " **";
+//
 //		Main.consola.append(tipo);
 //		bandera=false;
 	}
