@@ -6,11 +6,9 @@ import javax.script.ScriptException;
 
 public class CodigoIntermedio {
 	private String cuadruplo;
-	private ArrayList<String> auxExp;
 	private ArrayList<String> expresion;
 	private ArrayList<Double>UZ=new ArrayList<Double>();
 	public CodigoIntermedio(int cont, ArrayList<String> expresion, String cuadruplo) {
-		auxExp=new ArrayList<String>();
 		this.expresion=expresion;
 		this.cuadruplo="----------------------------------------------------------------------------------\nCuadruplo "+(cont)+"\n"+cuadruplo+"\nOperador\tOperando 1\tOperando2\tResultado";
 		while(expresion.contains("(") || expresion.contains(")"))
@@ -39,47 +37,25 @@ public class CodigoIntermedio {
 
 
 	private void checarJerarquia(int inicio, int fin) {
+		checarOperadores("/", "*", inicio, fin);
+		checarOperadores("+", "-", 0, expresion.size());
+	}
+	
+	private void checarOperadores(String op1, String op2, int inicio, int fin) {
 		String num1, num2;
-				System.out.println(inicio+" inicio y fin "+fin);
 		for (int i = inicio; i < fin; i++) {
-			if(expresion.get(i).equals("/") || expresion.get(i).equals("*")) {
+			if(expresion.get(i).equals(op1) || expresion.get(i).equals(op2)) {
 				num1=expresion.get(i-1);
 				num2=expresion.get(i+1);
-				System.out.println(num1+"------"+expresion.get(i)+"------"+num2);
 				hacerOperacion(num1, expresion.get(i), num2);
 				if(!((i+2)>=expresion.size()) && expresion.get(i+2).equals(")"))
-						expresion.remove(i+2);
+					expresion.remove(i+2);
 				expresion.remove(i+1);
 				expresion.remove(i);
 				expresion.set(i-1, "UZ"+UZ.size());
 				if(!((i-2)<=0) && expresion.get(i-2).equals("("))
 					expresion.remove(i-2);
-				//i=4
-				//0		1	2	3	4	5	6	7	8	9	10	11	12	13	14
-				//2		*	(	3	/	4	*	U1	)	*	7;
-				
-				
-				for (int j = 0; j < expresion.size(); j++) {
-					System.out.print(expresion.get(j)+"\t");
-				}
-				if(!expresion.contains("(") || !expresion.contains(")"))
-					i=0;
-				fin=expresion.size()-1;
-				continue;
-			}
-			if(expresion.get(i).equals("+") || expresion.get(i).equals("-")) {
-				num1=expresion.get(i-1);
-				num2=expresion.get(i+1);
-				System.out.println(num1+"------"+expresion.get(i)+"------"+num2);
-				hacerOperacion(num1, expresion.get(i), num2);
-				if(!((i+2)>=expresion.size()) && expresion.get(i+2).equals(")"))
-						expresion.remove(i+2);
-				expresion.remove(i+1);
-				expresion.remove(i);
-				expresion.set(i-1, "UZ"+UZ.size());
-				if(!((i-2)<=0) && expresion.get(i-2).equals("("))
-					expresion.remove(i-2);
-				
+
 				for (int j = 0; j < expresion.size(); j++) {
 					System.out.print(expresion.get(j)+"\t");
 				}
@@ -108,7 +84,7 @@ public class CodigoIntermedio {
 		}
 		UZ.add(Double.parseDouble(exp));
 		cuadruplo=cuadruplo+"\n"+op+"\t"+num1o+"\t"+num2o+"\tUZ"+UZ.size();
-		System.out.println(cuadruplo);
+		System.out.println(cuadruplo+"\n");
 	}
 	private String concatenar(ArrayList<String> lista) {
 		String cadena="";
@@ -125,8 +101,5 @@ public class CodigoIntermedio {
 			return false;  
 		}  
 	}
-	//	private void asingarFinal() {
-	//		String variable=
-	//	}
 
 }
