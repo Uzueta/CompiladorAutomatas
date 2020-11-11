@@ -251,8 +251,8 @@ public class Sintactico<T> {
 			tipo = "\nError sintactico en token ** " + tok + " ** se esperaba un token ** "
 					+ tipo + " **";
 
-		Main.consola.append(tipo);
-		bandera=false;
+//		Main.consola.append(tipo);
+//		bandera=false;
 	}
 
 	public void error() {
@@ -299,7 +299,7 @@ public class Sintactico<T> {
 																														// no
 																														// lance
 																														// error
-						"==", "<=", ">=", "!", "!=", "true", "false", "(", ")", "/", "+", "-", "*", "if" };
+						"==", "<=", ">=", "!", "!=", "true", "false", "(", ")", "/", "+", "-", "*", "if", "double" };
 		if (type == 50)
 			return devuelve = "numerico";
 		if (type == 52)
