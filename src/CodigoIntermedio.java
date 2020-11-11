@@ -86,20 +86,4 @@ public class CodigoIntermedio {
 		cuadruplo=cuadruplo+"\n"+op+"\t"+num1o+"\t"+num2o+"\tUZ"+UZ.size();
 		System.out.println(cuadruplo+"\n");
 	}
-	private String concatenar(ArrayList<String> lista) {
-		String cadena="";
-		for (int i = 0; i < lista.size(); i++) {
-			cadena+=lista.get(i);
-		}
-		return cadena;
-	}
-	private boolean isNumeric(String str) {
-		try {  
-			Double.parseDouble(str);  
-			return true;
-		} catch(NumberFormatException e){  
-			return false;  
-		}  
-	}
-
 }
