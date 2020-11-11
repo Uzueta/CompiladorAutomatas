@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Semantico {
 	private String cadenas[] = {"class", "public", "private", "while","int","boolean","{","}", "=", ";","<", ">", 
-			"==", "<=", ">=", "!", "!=","true","false", "(",")", "/", "+", "-", "*", "if"};		
+			"==", "<=", ">=", "!", "!=","true","false", "(",")", "/", "+", "-", "*", "if", "double"};		
 	private String errores;
 	private ArrayList<Simbolo> simbolos;
 	private boolean bandera;
@@ -110,7 +110,6 @@ public class Semantico {
 	}
 	private boolean isVariable(String v) {
 		for (int i = 0; i < cadenas.length; i++) {
-			System.out.println(v+"-----"+cadenas[i]);
 			if(v.equals(cadenas[i]))
 				return false;
 		}

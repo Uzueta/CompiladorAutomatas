@@ -6,7 +6,7 @@ import javax.swing.table.*;
 
 public class TablaSimbolos extends JFrame{
 	String cadenas[] = {"class", "public", "private", "while","int","boolean","{","}", "=", ";","<", ">", 
-			"==", "<=", ">=", "!", "!=","true","false", "(",")", "/", "+", "-", "*", "if"};		
+			"==", "<=", ">=", "!", "!=","true","false", "(",")", "/", "+", "-", "*", "if", "double"};		
 	JTable tabla;
 	DefaultTableModel modelo;
 	private ArrayList<Simbolo> simbolos=new ArrayList<Simbolo>();
@@ -27,13 +27,17 @@ public class TablaSimbolos extends JFrame{
 		String tipo=null, nombre=null, valor=null, pos=null;
 		for (int i = 0; i < tokens.size(); i++) {
 			aux=tokens.get(i);
-			if(aux.getTipo()==0 || aux.getTipo()==4 || aux.getTipo()==5) {
+			System.out.println(aux.getTipo());
+			if(aux.getTipo()==0 || aux.getTipo()==4 || aux.getTipo()==5 || aux.getTipo()==26) {
 				tipo=cadenas[aux.getTipo()];
 				nombre=tokens.get(i+1).getToken();
 				if(tokens.get(i+2).getTipo()==8)
+					//					if(isExpresion(tokens, i))
+					//						System.out.println("");
+					//					else
 					valor=tokens.get(i+3).getToken();
 				else
-					if(tipo.equalsIgnoreCase("int"))
+					if(tipo.equalsIgnoreCase("int") || tipo.equalsIgnoreCase("double"))
 						valor="null";
 					else
 						valor=" ";
@@ -48,6 +52,24 @@ public class TablaSimbolos extends JFrame{
 		}
 		JScrollPane panel=new JScrollPane(tabla);
 		add(panel);
+	}
+	private boolean isExpresion(ArrayList<Token> tokens, int index) {
+		if(tokens.get(index+4).getTipo()==9)
+			return false;
+		index+=3;
+		String expresion="";
+		for (int i = index; i < tokens.size(); i++) {
+			if(tokens.get(index).getToken().equals("int") || tokens.get(index).getToken().equals("boolean")) {
+				Main.consola.append("Falta un ; en la linea "+tokens.get(index-1).getRenglon());
+				return false;
+			}
+			if(tokens.get(index).getTipo()==9)
+				break;
+			expresion+=tokens.get(index).getToken();
+		}
+
+
+		return true;
 	}
 	public ArrayList<Simbolo> getSimbolos() {
 		return simbolos;
