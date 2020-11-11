@@ -4,11 +4,18 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.*;
 
+
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
+
 public class TablaSimbolos extends JFrame{
 	String cadenas[] = {"class", "public", "private", "while","int","boolean","{","}", "=", ";","<", ">", 
 			"==", "<=", ">=", "!", "!=","true","false", "(",")", "/", "+", "-", "*", "if", "double"};		
 	JTable tabla;
 	DefaultTableModel modelo;
+	private ArrayList <String> opExp;
+	private String expresion;
 	private ArrayList<Simbolo> simbolos=new ArrayList<Simbolo>();
 	String [] columnas= {"Tipo", "Nombre", "Valor", "Posición"};
 	private ArrayList<Token> tokens;
@@ -27,14 +34,13 @@ public class TablaSimbolos extends JFrame{
 		String tipo=null, nombre=null, valor=null, pos=null;
 		for (int i = 0; i < tokens.size(); i++) {
 			aux=tokens.get(i);
-			System.out.println(aux.getTipo());
 			if(aux.getTipo()==0 || aux.getTipo()==4 || aux.getTipo()==5 || aux.getTipo()==26) {
 				tipo=cadenas[aux.getTipo()];
 				nombre=tokens.get(i+1).getToken();
 				if(tokens.get(i+2).getTipo()==8)
-					//					if(isExpresion(tokens, i))
-					//						System.out.println("");
-					//					else
+					if(isExpresion(tokens, i+3))
+						valor=calcular()+"";
+					else
 					valor=tokens.get(i+3).getToken();
 				else
 					if(tipo.equalsIgnoreCase("int") || tipo.equalsIgnoreCase("double"))
@@ -54,22 +60,37 @@ public class TablaSimbolos extends JFrame{
 		add(panel);
 	}
 	private boolean isExpresion(ArrayList<Token> tokens, int index) {
-		if(tokens.get(index+4).getTipo()==9)
+		opExp=new ArrayList<String>();
+		if(tokens.get(index+1).getTipo()==9)
 			return false;
-		index+=3;
-		String expresion="";
+		expresion="";
 		for (int i = index; i < tokens.size(); i++) {
-			if(tokens.get(index).getToken().equals("int") || tokens.get(index).getToken().equals("boolean")) {
-				Main.consola.append("Falta un ; en la linea "+tokens.get(index-1).getRenglon());
-				return false;
-			}
-			if(tokens.get(index).getTipo()==9)
+			if(tokens.get(i).getTipo()==9)
 				break;
-			expresion+=tokens.get(index).getToken();
+			expresion+=tokens.get(i).getToken();
+			opExp.add(tokens.get(i).getToken());
 		}
-
-
+		
 		return true;
+	}
+	private double calcular() {
+		ScriptEngineManager mgr = new ScriptEngineManager();
+		ScriptEngine eng = mgr.getEngineByName("JavaScript");
+		String res="";
+		try {
+			res = eng.eval(expresion)+"";
+		} catch (ScriptException e) {
+			e.printStackTrace();
+		}
+		return Double.parseDouble(res);
+	}
+	private boolean isNumeric(String str) {
+		  try {  
+			    Double.parseDouble(str);  
+			    return true;
+			  } catch(NumberFormatException e){  
+			    return false;  
+			  }  
 	}
 	public ArrayList<Simbolo> getSimbolos() {
 		return simbolos;
